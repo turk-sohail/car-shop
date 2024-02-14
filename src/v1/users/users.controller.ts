@@ -1,17 +1,14 @@
-import { Body, Controller, Param, Post, Get, Query, Delete, Patch } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
+import { Body, Controller, Param, Get, Query, Delete, Patch, UseInterceptors } from '@nestjs/common';
 import { UserService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { SerializeUser } from 'src/v1/interceptors/serializd-user.interceptor';
 
-@Controller('auth')
+@UseInterceptors(SerializeUser)
+@Controller()
 export class UsersController {
     constructor(private userService: UserService) { }
 
-    @Post("/signup")
-    async createUser(@Body() body: CreateUserDto) {
-        const user = await this.userService.create(body.email, body.password);
-        return user
-    }
+
 
     @Get("/:id")
     async findUser(@Param("id") id: string) {
