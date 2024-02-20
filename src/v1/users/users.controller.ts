@@ -1,9 +1,11 @@
-import { Body, Controller, Param, Get, Query, Delete, Patch, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Param, Get, Query, Delete, Patch, Session } from '@nestjs/common';
 import { UserService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { SerializeUser } from 'src/v1/interceptors/serializd-user.interceptor';
 
-@UseInterceptors(SerializeUser)
+
+
+
+
 @Controller()
 export class UsersController {
     constructor(private userService: UserService) { }
@@ -16,7 +18,8 @@ export class UsersController {
     }
 
     @Get("/")
-    async findAllUsers(@Query('email') email: string) {
+    async findAllUsers(@Query('email') email: string, @Session() session: any) {
+        console.log(session.color)
         return this.userService.find(email)
     }
 

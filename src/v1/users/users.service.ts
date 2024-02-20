@@ -31,7 +31,12 @@ export class UserService {
     }
 
     async findOne(id: number) {
-        return await this.userRepo.findOneBy({ id })
+        if (!id) {
+            throw new BadRequestException();
+            return null;
+        }
+        return await this.userRepo.findOneBy({ id });
+
     }
 
     async update(id: number, updates: Partial<User>) {

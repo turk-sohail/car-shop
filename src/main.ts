@@ -1,12 +1,17 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import * as cookieParser from 'cookie-parser';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const cookieSession = require("cookie-session");
+
+
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.use(cookieParser('thes', {}));
   app.setGlobalPrefix("/api");
+  app.use(cookieSession({
+    keys: ["asdasd"]
+  }))
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   await app.listen(3000);
 }

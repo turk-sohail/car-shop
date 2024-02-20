@@ -9,13 +9,17 @@ import { Report } from './v1/reports/entities/report.entity';
 import { AuthModule } from './v1/auth/auth.module';
 import { RouterModule } from '@nestjs/core';
 import { V1Module } from './v1/v1.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 @Module({
-  imports: [V1Module, UsersModule, ReportsModule, TypeOrmModule.forRoot({
+  imports: [ConfigModule.forRoot({
+    isGlobal: true,
+    envFilePath: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env.test',
+  }), V1Module, UsersModule, ReportsModule, TypeOrmModule.forRoot({
     type: 'mysql',
     host: 'localhost',
     port: 3306,
-    username: 'root',
-    password: 'asd3129760162',
+    username: process.env.USER_NAME,
+    password: process.env.PASSWORD,
     database: 'cars',
     entities: [User, Report],
     synchronize: true,
