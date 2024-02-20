@@ -10,6 +10,7 @@ import { AuthModule } from './v1/auth/auth.module';
 import { RouterModule } from '@nestjs/core';
 import { V1Module } from './v1/v1.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { CommonModule } from './v1/common/common.module';
 @Module({
   imports: [ConfigModule.forRoot({
     isGlobal: true,
@@ -42,7 +43,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         }
       ]
     }
-  ]), AuthModule],
+  ]), AuthModule, CommonModule],
   controllers: [AppController],
   providers: [AppService],
 })

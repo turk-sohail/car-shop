@@ -31,11 +31,17 @@ export class UserService {
     }
 
     async findOne(id: number) {
-        if (!id) {
-            throw new BadRequestException();
-            return null;
+        try {
+            if (!id) {
+                throw new BadRequestException();
+                return null;
+            }
+            return await this.userRepo.findOneBy({ id });
+        } catch (error) {
+            throw error
         }
-        return await this.userRepo.findOneBy({ id });
+
+
 
     }
 
@@ -66,6 +72,11 @@ export class UserService {
         if (!isValid) {
             throw new UnauthorizedException("Credentials does not match");
         }
+        return user;
+    }
+
+    async currUser(id: number) {
+        const user = await this.userRepo.findBy({ id })
         return user;
     }
 }

@@ -3,6 +3,8 @@ import { Expose, Transform } from "class-transformer";
 export class ReportDto {
 
     @Expose()
+    approved: boolean
+    @Expose()
     make: string
     @Expose()
     model: string
